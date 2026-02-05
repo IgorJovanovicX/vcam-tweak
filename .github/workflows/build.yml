@@ -9,16 +9,24 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    container: theos/theos:latest
+    runs-on: macos-14
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       
+    - name: Setup Theos
+      run: |
+        brew install ldid
+        git clone --recursive https://github.com/theos/theos.git $HOME/theos
+        curl -LO https://github.com/theos/sdks/archive/master.zip
+        unzip master.zip -d $HOME/theos/sdks
+        mv $HOME/theos/sdks/sdks-master/* $HOME/theos/sdks/
+        rm -rf $HOME/theos/sdks/sdks-master master.zip
+      
     - name: Build package
       run: |
-        export THEOS=/theos
+        export THEOS=$HOME/theos
         export PATH="$THEOS/bin:$PATH"
         make clean
         make package FINALPACKAGE=1
