@@ -18,7 +18,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y fakeroot git perl curl unzip libncurses5
+        sudo apt-get install -y fakeroot git perl curl unzip
         
     - name: Setup Theos
       run: |
