@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: cryptiiiic/theos:latest
+    container: kritanta/theos-action:latest
     
     steps:
     - name: Checkout repository
