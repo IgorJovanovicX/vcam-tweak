@@ -10,34 +10,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: cryptiiiic/theos:latest
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
       
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y fakeroot git perl curl unzip clang lld
-        
-    - name: Setup Theos
-      run: |
-        git clone --recursive https://github.com/theos/theos.git $HOME/theos
-        curl -LO https://github.com/theos/sdks/archive/master.zip
-        unzip master.zip -d $HOME/theos/sdks
-        mv $HOME/theos/sdks/sdks-master/* $HOME/theos/sdks/
-        rm -rf $HOME/theos/sdks/sdks-master master.zip
-        
-    - name: Setup Minimal Toolchain
-      run: |
-        mkdir -p $HOME/theos/toolchain/linux/iphone/bin
-        ln -s /usr/bin/clang $HOME/theos/toolchain/linux/iphone/bin/clang
-        ln -s /usr/bin/clang++ $HOME/theos/toolchain/linux/iphone/bin/clang++
-        ln -s /usr/bin/ld.lld $HOME/theos/toolchain/linux/iphone/bin/ld
-      
     - name: Build package
       run: |
-        export THEOS=$HOME/theos
+        export THEOS=/theos
         export PATH="$THEOS/bin:$PATH"
         make clean
         make package FINALPACKAGE=1
