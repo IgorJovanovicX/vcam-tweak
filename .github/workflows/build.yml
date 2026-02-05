@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     
     steps:
     - name: Checkout repository
@@ -18,7 +18,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y fakeroot git perl curl unzip
+        sudo apt-get install -y fakeroot git perl curl unzip libncurses5
         
     - name: Setup Theos
       run: |
