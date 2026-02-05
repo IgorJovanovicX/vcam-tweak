@@ -1,0 +1,40 @@
+name: Build VCam Tweak
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Theos
+      uses: Randomblock1/theos-action@v1
+      
+    - name: Build package
+      run: |
+        export THEOS=~/theos
+        export PATH="$THEOS/bin:$PATH"
+        make clean
+        make package FINALPACKAGE=1
+        
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: vcam-tweak-${{ github.sha }}
+        path: packages/*.deb
+        
+    - name: Create Release (on tag)
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: packages/*.deb
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
