@@ -1,8 +1,16 @@
 #import "image_utils.h"
 
+%ctor {
+    NSLog(@"[vcam] ========== VCAM TWEAK LOADED ==========");
+    NSLog(@"[vcam] Process: %s", getprogname());
+    NSLog(@"[vcam] PID: %d", getpid());
+    [@"VCAM LOADED\n" writeToFile:@"/tmp/vcam_loaded.txt" atomically:YES encoding:NSUTF8StringEncoding error:nil];
+}
+
 %hook BWNodeOutput
 
 - (void)emitSampleBuffer:(CMSampleBufferRef)sampleBuffer {
+    NSLog(@"[vcam] ========== emitSampleBuffer CALLED ==========");
     unsigned int mediaType = ((unsigned int (*)(id, SEL))objc_msgSend)(self, sel_registerName("mediaType"));
     if (mediaType != 'vide') {
         %orig(sampleBuffer);
