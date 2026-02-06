@@ -1,4 +1,5 @@
 #import "image_utils.h"
+#import <UIKit/UIKit.h>
 
 %hook BWNodeOutput
 
