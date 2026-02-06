@@ -14,6 +14,11 @@
         %orig(sampleBuffer);
         return;
     }
+    
+    // Log camera resolution
+    size_t width = CVPixelBufferGetWidth(originalImageBuffer);
+    size_t height = CVPixelBufferGetHeight(originalImageBuffer);
+    NSLog(@"[VCam] Camera buffer resolution: %zux%zu", width, height);
 
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
