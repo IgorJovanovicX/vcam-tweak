@@ -2,8 +2,8 @@ Package: com.yourcompany.vcam
 Name: vcam
 Version: 0.0.1
 Architecture: iphoneos-arm64
-Description: Virtual camera tweak for iOS
+Description: An awesome MobileSubstrate tweak!
 Maintainer: Ethan Arbuckle
 Author: Ethan Arbuckle
 Section: Tweaks
-Depends: com.opa334.ellekit
+Depends: mobilesubstrate (>= 0.9.5000)
